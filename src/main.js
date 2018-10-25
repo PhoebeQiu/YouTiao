@@ -10,6 +10,7 @@ import store from './store/index'
 Vue.config.productionTip = false
 
 Vue.use(iView)
+Vue.use(router)
 
 /* eslint-disable no-new */
 new Vue({
