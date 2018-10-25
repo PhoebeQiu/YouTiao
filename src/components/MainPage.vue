@@ -6,7 +6,7 @@
           <div class="content">
             <div>
               <div class="conHeader">
-                <Button id="conBook" type="text">
+                <Button id="conBook" v-on:click="toBook" type="text">
                   <p><Icon type="ios-book-outline" size="22"/></p>
                 </Button>
                 <Button id="conAdd" shape="circle"><p>添加预算</p></Button>
@@ -55,10 +55,6 @@
         <TabPane label="报表" name="name2">标签二的内容</TabPane>
       </Tabs>
     </div>
-    <div>
-      <Input v-model="value" placeholder="Enter something..." style="width: 300px" />
-      <button v-on:click="addAccBook()">添加账本</button>
-    </div>
     <div class="mainMenu">
       <div class="mainMenuSpan">记账</div>
       <div class="mainMenuSpan">资产</div>
@@ -68,21 +64,18 @@
 </template>
 
 <script>
-import accBook from '@/service/accBook'
+
 export default {
   name: 'MainPage',
   data () {
     return {
-      buttonSize: 'large',
-      value: ''
+      buttonSize: 'large'
     }
   },
   methods: {
-    async addAccBook () {
-      console.log('value的值', this.value)
-      let addAccBookByName = await accBook.addAccBookByName(this.value)
-      console.log('添加账本', addAccBookByName)
-      console.log('id', addAccBookByName.id)
+    // 跳转到账本组件
+    toBook: function () {
+      this.$router.push({name: 'Book'})
     }
   }
 }
