@@ -31,9 +31,13 @@ export default {
   name: 'Book',
   data () {
     return {
-      books: [],
       // input输入框
       value: ''
+    }
+  },
+  computed: {
+    books () {
+      return this.$store.state.Book.books
     }
   },
   // 页面加载时使用方法
@@ -47,7 +51,8 @@ export default {
     async getAllBook () {
       let getBooks = await book.getBooks()
       console.log('获取全部账本：', getBooks)
-      this.books = getBooks
+      // 更新 所有账本
+      this.$store.dispatch('updateBooks', {arr: getBooks})
     },
     // 跳转到主页
     toMainPage: function (id) {
