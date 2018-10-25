@@ -6,7 +6,7 @@
       <div>
         <card>
           <Row :gutter="16">
-            <div class="book" v-for="book in books">
+            <div class="book" v-for="book in books" :key="book.id">
               <Col span="8">
                 <Card :bordered="false">
                   <p><a v-on:click="toMainPage(book.id)">{{book.name}}</a></p>
