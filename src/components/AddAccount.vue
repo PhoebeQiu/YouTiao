@@ -104,10 +104,10 @@ export default {
       var dateValue = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
       console.log('后台没有添加日期！！！', dateValue)
       var tempAccount = {
-        "Expense": this.formItem.inputMoney,
-        "IncomeOrOutcome": this.formItem.selectBelong,
-        "CostType": this.formItem.selectType,
-        "Descr": this.formItem.textarea
+        "expense": this.formItem.inputMoney,
+        "incomeOrOutcome": this.formItem.selectBelong,
+        "costType": this.formItem.selectType,
+        "descr": this.formItem.textarea
       }
       console.log('json:', tempAccount)
       // 提交数据到后台

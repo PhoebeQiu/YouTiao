@@ -1,1 +1,1 @@
-export const BUDGET = 'http://localhost:90/product'
+export const BUDGET = 'http://localhost:90/ConsumerBook/budget'
