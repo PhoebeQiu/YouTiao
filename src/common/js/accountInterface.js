@@ -1,1 +1,1 @@
-export const ACCOUNT = 'http://localhost:90/product'
+export const ACCOUNT = 'http://localhost:90/ConsumerBook'

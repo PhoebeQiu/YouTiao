@@ -9,7 +9,7 @@
                 <Button id="conBook" v-on:click="toBook" type="text">
                   <p><Icon type="ios-book-outline" size="22"/></p>
                 </Button>
-                <Button id="conAdd" shape="circle"><p>添加预算</p></Button>
+                <Button id="conAdd"  v-on:click="toAddBudget(bookId)" shape="circle"><p>添加预算</p></Button>
                 <Button id="conCalendar" type="text">
                   <Icon type="ios-calendar-outline" size="22"/>
                 </Button>
@@ -17,17 +17,17 @@
               <div class="conMiddle">
                 <div class="conMiddle_div">
                   <p>10月收入：<br/></p>
-                  <p class="conMiddle_p">1000.00</p>
+                  <p class="conMiddle_p">{{inCome}}</p>
                 </div>
                 <div class="conMiddle_div">
-                  <Button :size="buttonSize" icon="" shape="circle">
+                  <Button v-on:click="toAddAccount(bookId)" :size="buttonSize" shape="circle">
                     <Icon type="ios-arrow-dropdown-circle" size="33"/>
                     <br/> 记一笔
                   </Button>
                 </div>
                 <div class="conMiddle_div">
                   <p>10月支出：<br/></p>
-                  <p class="conMiddle_p">1000.00</p>
+                  <p class="conMiddle_p">{{outCome}}</p>
                 </div>
               </div>
               <div class="confoot">
@@ -64,18 +64,59 @@
 </template>
 
 <script>
+import account from '@/service/account'
 
 export default {
   name: 'MainPage',
   data () {
     return {
+      bookId: -1,
+      // 按钮：数据
       buttonSize: 'large'
     }
   },
+  computed: {
+    inComeList () {
+      return this.$store.state.Account.inComeList
+    },
+    outComeList () {
+      return this.$store.state.Account.outComeList
+    },
+    inCome () {
+      return this.$store.state.Account.inCome
+    },
+    outCome () {
+      return this.$store.state.Account.outCome
+    },
+    allInCome () {
+      return this.$store.state.Account.allInCome
+    }
+  },
+  mounted: function () {
+    // 初始化 账本ID
+    this.bookId = this.$route.params.boookId
+    // 自动加载 账本的所有记账信息
+    this.$nextTick(function () {
+      this.getAccountsByBook(this.bookId)
+    })
+  },
   methods: {
-    // 跳转到账本组件
+    // 获取 账本的所有记账信息
+    async getAccountsByBook (bookId) {
+      let getAccounts = await account.getAccountsByBook(bookId)
+      console.log('获取账本的所有记账信息：', getAccounts)
+      // 更新 账本的所有记账信息
+      this.$store.dispatch('updateAccounts', {arr: getAccounts})
+    },
+    // 跳转到其它组件
     toBook: function () {
       this.$router.push({name: 'Book'})
+    },
+    toAddBudget: function (bookId) {
+      this.$router.push({name: 'AddBudget', params: {boookId: bookId}})
+    },
+    toAddAccount: function (bookId) {
+      this.$router.push({name: 'AddAccount', params: {boookId: bookId}})
     }
   }
 }

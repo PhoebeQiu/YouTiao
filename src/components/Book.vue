@@ -42,6 +42,7 @@ export default {
   },
   // 页面加载时使用方法
   mounted: function () {
+    // 自动加载所有账本信息
     this.$nextTick(function () {
       this.getAllBook()
     })
@@ -54,7 +55,7 @@ export default {
       // 更新 所有账本
       this.$store.dispatch('updateBooks', {arr: getBooks})
     },
-    // 跳转到主页
+    // 跳转
     toMainPage: function (id) {
       this.$router.push({name: 'MainPage', params: {boookId: id}})
     },
