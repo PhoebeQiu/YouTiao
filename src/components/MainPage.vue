@@ -52,7 +52,12 @@
             <div></div>
           </div>
         </TabPane>
-        <TabPane label="报表" name="name2">标签二的内容</TabPane>
+        <TabPane label="报表" name="name2">
+          <!--<div>-->
+            <!--<Button :size="buttonSize" shape="circle">收入报表</Button>-->
+          <!--</div>-->
+          <div id="AccountEcharts" style="width: 400px;height: 300px;"></div>
+        </TabPane>
       </Tabs>
     </div>
     <div class="mainMenu">
@@ -65,12 +70,17 @@
 
 <script>
 import account from '@/service/account'
+import echarts from 'echarts'
 
 export default {
   name: 'MainPage',
   data () {
     return {
       bookId: -1,
+      // 图表数据
+      charts: '',
+      opinion: [],
+      opinionData: [],
       // 按钮：数据
       buttonSize: 'large'
     }
@@ -99,6 +109,19 @@ export default {
     this.$nextTick(function () {
       this.getAccountsByBook(this.bookId)
     })
+    // 加载图表
+    this.$nextTick(function () {
+      this.opinion = []
+      this.opinionData = []
+      for (let i = 0; i < this.inComeList.length; i++) {
+        this.opinion.push(this.inComeList[i].costType)
+        this.opinionData.push({
+          value: this.inComeList[i].expense,
+          name: this.inComeList[i].costType
+        })
+      }
+      this.drawPie('AccountEcharts')
+    })
   },
   methods: {
     // 获取 账本的所有记账信息
@@ -107,6 +130,48 @@ export default {
       console.log('获取账本的所有记账信息：', getAccounts)
       // 更新 账本的所有记账信息
       this.$store.dispatch('updateAccounts', {arr: getAccounts})
+    },
+    // 绘制图表
+    drawPie (id) {
+      this.charts = echarts.init(document.getElementById(id))
+      this.charts.setOption({
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a}<br/>{b}:{c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          x: 'left',
+          data: this.opinion
+        },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '30',
+                  fontWeight: 'blod'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: this.opinionData
+          }
+        ]
+      })
     },
     // 跳转到其它组件
     toBook: function () {
