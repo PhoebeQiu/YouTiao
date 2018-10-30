@@ -25,7 +25,6 @@ export default {
   name: 'AddBudget',
   data: function () {
     return {
-      bookId: -1,
       formItem: {
         inputBudget: '',
         inputSurplusBudget: '',
@@ -33,28 +32,32 @@ export default {
       }
     }
   },
+  computed: {
+    // 账本
+    bookId () {
+      return this.$store.state.Book.bookId
+    }
+  },
   mounted: function () {
-    // 初始化 账本ID
-    this.bookId = this.$route.params.boookId
   },
   methods: {
     // 跳转
     toMainPage: function (id) {
-      this.$router.push({name: 'MainPage', params: {boookId: id}})
+      this.$router.push({name: 'MainPage'})
     },
     // 添加 预算
     async addBudget (id) {
       var tempBudget = {
-        "budget": this.formItem.inputBudget,
+        'budget': this.formItem.inputBudget,
         // "IncomeOrOutcome": this.formItem.inputSurplusBudget,
-        "descr": this.formItem.textarea
+        'descr': this.formItem.textarea
       }
       console.log('json:', tempBudget)
       // 提交数据到后台
       let addBudget = await budget.addBudget(id, tempBudget)
       console.log('提交后返回：', addBudget)
       // 跳转
-      this.$router.push({name: 'MainPage', params: {boookId: id}})
+      this.$router.push({name: 'MainPage'})
     }
   }
 }

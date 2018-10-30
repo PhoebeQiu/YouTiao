@@ -56,7 +56,9 @@
           <!--<div>-->
             <!--<Button :size="buttonSize" shape="circle">收入报表</Button>-->
           <!--</div>-->
-          <div id="AccountEcharts" style="width: 400px;height: 300px;"></div>
+          <div>
+            <AccountCharts/>
+          </div>
         </TabPane>
       </Tabs>
     </div>
@@ -70,22 +72,23 @@
 
 <script>
 import account from '@/service/account'
-import echarts from 'echarts'
+import AccountCharts from '@/pages/account/AccountCharts'
 
 export default {
   name: 'MainPage',
+  components: {AccountCharts},
   data () {
     return {
-      bookId: -1,
-      // 图表数据
-      charts: '',
-      opinion: [],
-      opinionData: [],
       // 按钮：数据
       buttonSize: 'large'
     }
   },
   computed: {
+    // 账本
+    bookId () {
+      return this.$store.state.Book.bookId
+    },
+    // 账本记录
     inComeList () {
       return this.$store.state.Account.inComeList
     },
@@ -102,25 +105,10 @@ export default {
       return this.$store.state.Account.allInCome
     }
   },
-  mounted: function () {
-    // 初始化 账本ID
-    this.bookId = this.$route.params.boookId
+  beforeMount: function () {
     // 自动加载 账本的所有记账信息
     this.$nextTick(function () {
       this.getAccountsByBook(this.bookId)
-    })
-    // 加载图表
-    this.$nextTick(function () {
-      this.opinion = []
-      this.opinionData = []
-      for (let i = 0; i < this.inComeList.length; i++) {
-        this.opinion.push(this.inComeList[i].costType)
-        this.opinionData.push({
-          value: this.inComeList[i].expense,
-          name: this.inComeList[i].costType
-        })
-      }
-      this.drawPie('AccountEcharts')
     })
   },
   methods: {
@@ -131,57 +119,15 @@ export default {
       // 更新 账本的所有记账信息
       this.$store.dispatch('updateAccounts', {arr: getAccounts})
     },
-    // 绘制图表
-    drawPie (id) {
-      this.charts = echarts.init(document.getElementById(id))
-      this.charts.setOption({
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a}<br/>{b}:{c} ({d}%)'
-        },
-        legend: {
-          orient: 'vertical',
-          x: 'left',
-          data: this.opinion
-        },
-        series: [
-          {
-            name: '访问来源',
-            type: 'pie',
-            radius: ['50%', '70%'],
-            avoidLabelOverlap: false,
-            label: {
-              normal: {
-                show: false,
-                position: 'center'
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: '30',
-                  fontWeight: 'blod'
-                }
-              }
-            },
-            labelLine: {
-              normal: {
-                show: false
-              }
-            },
-            data: this.opinionData
-          }
-        ]
-      })
-    },
     // 跳转到其它组件
     toBook: function () {
       this.$router.push({name: 'Book'})
     },
     toAddBudget: function (bookId) {
-      this.$router.push({name: 'AddBudget', params: {boookId: bookId}})
+      this.$router.push({name: 'AddBudget'})
     },
     toAddAccount: function (bookId) {
-      this.$router.push({name: 'AddAccount', params: {boookId: bookId}})
+      this.$router.push({name: 'AddAccount'})
     }
   }
 }

@@ -31,13 +31,14 @@ export default {
   name: 'Book',
   data () {
     return {
+      books: [],
       // input输入框
       value: ''
     }
   },
   computed: {
-    books () {
-      return this.$store.state.Book.books
+    bookId () {
+      return this.$store.state.Book.bookId
     }
   },
   // 页面加载时使用方法
@@ -51,21 +52,20 @@ export default {
     // 获取全部账本
     async getAllBook () {
       let getBooks = await book.getBooks()
-      console.log('获取全部账本：', getBooks)
       // 更新 所有账本
-      this.$store.dispatch('updateBooks', {arr: getBooks})
+      this.books = getBooks
     },
     // 跳转
     toMainPage: function (id) {
-      this.$router.push({name: 'MainPage', params: {boookId: id}})
+      this.$store.dispatch('updateBookID', id)
+      this.$router.push({name: 'MainPage'})
     },
     // 添加账本并返回账本信息
     async addAccBook () {
-      console.log('value的值', this.value)
       let addBookByName = await book.addBookByName(this.value)
-      console.log('添加账本', addBookByName)
-      console.log('id', addBookByName.id)
-      this.$router.push({name: 'MainPage', params: {boookId: addBookByName.id}})
+      console.log('添加账本，名：', addBookByName, 'id：', addBookByName.id)
+      this.$store.dispatch('updateBookID', addBookByName.id)
+      this.$router.push({name: 'MainPage'})
     }
   }
 }

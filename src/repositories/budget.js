@@ -1,5 +1,5 @@
 import * as url from '@/common/js/budgetInterface'
-import { post, getByParams } from '@/common/js/httpHelper'
+import { post } from '@/common/js/httpHelper'
 
 const addBudget = async (bookId, tempBudget) => {
   const result = await post(`${url.BUDGET}/${bookId}`, tempBudget)

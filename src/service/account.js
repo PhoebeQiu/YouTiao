@@ -8,8 +8,13 @@ const getAccountsByBook = async (bookId) => {
   let response = await accountRepository.getAccountsByBook(bookId)
   return response
 }
+const getAccountsForCharts = async (bookId) => {
+  let response = await accountRepository.getAccountsForCharts(bookId)
+  return response
+}
 
 export default {
   addAccount: addAccount,
-  getAccountsByBook: getAccountsByBook
+  getAccountsByBook: getAccountsByBook,
+  getAccountsForCharts: getAccountsForCharts
 }

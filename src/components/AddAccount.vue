@@ -40,11 +40,11 @@ export default {
         selectBelong: '',
         accBelong: [
           {
-            value: '收入',
+            value: 'income',
             label: '收入'
           },
           {
-            value: '支出',
+            value: 'outcome',
             label: '支出'
           }
         ],
@@ -88,14 +88,18 @@ export default {
       }
     }
   },
+  computed: {
+    // 账本
+    bookId () {
+      return this.$store.state.Book.bookId
+    }
+  },
   mounted: function () {
-    // 初始化 账本ID
-    this.bookId = this.$route.params.boookId
   },
   methods: {
     // 跳转
     toMainPage: function (id) {
-      this.$router.push({name: 'MainPage', params: {boookId: id}})
+      this.$router.push({name: 'MainPage'})
     },
     // 添加记录到账本
     async addAccount (id) {
@@ -104,15 +108,19 @@ export default {
       var dateValue = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
       console.log('后台没有添加日期！！！', dateValue)
       var tempAccount = {
-        "expense": this.formItem.inputMoney,
-        "incomeOrOutcome": this.formItem.selectBelong,
-        "costType": this.formItem.selectType,
-        "descr": this.formItem.textarea
+        'expense': this.formItem.inputMoney,
+        'incomeOrOutcome': this.formItem.selectBelong,
+        'costType': this.formItem.selectType,
+        'descr': this.formItem.textarea
       }
       console.log('json:', tempAccount)
       // 提交数据到后台
       let addAccount = await account.addAccount(id, tempAccount)
       console.log('提交后返回：', addAccount)
+      let getAccounts = await account.getAccountsByBook(this.bookId)
+      console.log('获取账本的所有记账信息：', getAccounts)
+      // 更新 账本的所有记账信息
+      this.$store.dispatch('updateAccounts', {arr: getAccounts})
       // 跳转
       this.$router.push({name: 'MainPage', params: {boookId: id}})
     }

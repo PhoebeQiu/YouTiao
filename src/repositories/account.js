@@ -9,8 +9,13 @@ const getAccountsByBook = async (bookId) => {
   const result = await getByParams(`${url.ACCOUNT}/${bookId}/expense`)
   return result.data
 }
+const getAccountsForCharts = async (bookId) => {
+  const result = await getByParams(`${url.ACCOUNT}/Expense/${bookId}/pie`)
+  return result.data
+}
 
 export default {
   addAccount: addAccount,
-  getAccountsByBook: getAccountsByBook
+  getAccountsByBook: getAccountsByBook,
+  getAccountsForCharts: getAccountsForCharts
 }
