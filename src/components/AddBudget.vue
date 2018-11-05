@@ -5,7 +5,7 @@
         <Input v-model="formItem.inputBudget" style="width: 200px" placeholder="请输入"/>
       </FormItem>
       <FormItem label="剩余预算提示">
-        <Input v-model="formItem.inputSurplusBudget" style="width: 200px" placeholder="请输入"/>
+        <Input v-model="formItem.inputWarnBudget" style="width: 200px" placeholder="请输入"/>
       </FormItem>
       <FormItem label="备注">
         <Input v-model="formItem.textarea" type="textarea" style="width:200px" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入"></Input>
@@ -27,7 +27,7 @@ export default {
     return {
       formItem: {
         inputBudget: '',
-        inputSurplusBudget: '',
+        inputWarnBudget: '',
         textarea: ''
       }
     }
@@ -49,7 +49,7 @@ export default {
     async addBudget (id) {
       var tempBudget = {
         'budget': this.formItem.inputBudget,
-        // "IncomeOrOutcome": this.formItem.inputSurplusBudget,
+        'warnBudget': this.formItem.inputWarnBudget,
         'descr': this.formItem.textarea
       }
       console.log('json:', tempBudget)

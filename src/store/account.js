@@ -14,9 +14,6 @@ export default{
       state.inCome = arr.InCome
       state.outCome = arr.OutCome
       state.allInCome = arr.AllIncome
-      console.log('state.inComeList:', state.inComeList)
-      console.log('state.outComeList:', state.outComeList)
-      console.log('state.allInCome:', state.allInCome)
     }
   },
   actions: {

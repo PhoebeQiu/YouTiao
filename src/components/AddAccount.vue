@@ -105,19 +105,28 @@ export default {
     async addAccount (id) {
       // 日期处理
       var date = this.formItem.date
-      var dateValue = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-      console.log('后台没有添加日期！！！', dateValue)
+      // 处理日期：使3变成03，符合"yyyy-mm-dd"的格式
+      var zeroize = function (value, length) {
+        if (!length) length = 2
+        value = String(value)
+        for (var i = 0, zeros = ''; i < (length - value.length); i++) {
+          zeros += '0'
+        }
+        return zeros + value
+      }
+      var dateValue = date.getFullYear() + '-' + zeroize(date.getMonth() + 1) + '-' + zeroize(date.getDate())
       var tempAccount = {
         'expense': this.formItem.inputMoney,
         'incomeOrOutcome': this.formItem.selectBelong,
         'costType': this.formItem.selectType,
-        'descr': this.formItem.textarea
+        'descr': this.formItem.textarea,
+        'time': dateValue
       }
       console.log('json:', tempAccount)
       // 提交数据到后台
       let addAccount = await account.addAccount(id, tempAccount)
       console.log('提交后返回：', addAccount)
-      let getAccounts = await account.getAccountsByBook(this.bookId)
+      let getAccounts = await account.getAccountsByBook(id)
       console.log('获取账本的所有记账信息：', getAccounts)
       // 更新 账本的所有记账信息
       this.$store.dispatch('updateAccounts', {arr: getAccounts})

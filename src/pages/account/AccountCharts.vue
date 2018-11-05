@@ -3,7 +3,7 @@
     <div>
       <Button v-on:click="showIncomeCharts()" size="large" shape="circle">总收入</Button>
       <Button v-on:click="showOutcomeCharts()" size="large" shape="circle">总支出</Button>
-      <Button v-on:click="showAllcomeCharts()" size="large" shape="circle">总结余</Button>
+      <Button v-on:click="showTotalcomeCharts()" size="large" shape="circle">总结余</Button>
     </div>
     <div id="AccountEcharts" style="width: 400px;height: 300px;"></div>
   </div>
@@ -20,7 +20,7 @@ export default {
       // 图表,所需数据
       incomeList: [],
       outcomeList: [],
-      allcomeList: [],
+      totalcomeList: [],
       // 图表,展示数据
       charts: '',
       opinion: [],
@@ -48,6 +48,7 @@ export default {
       console.log('图表所需数据:', getAccounts)
       this.incomeList = getAccounts.income
       this.outcomeList = getAccounts.outcome
+      this.totalcomeList = getAccounts.totalCome
     },
     // 绘制图表
     drawPie (id) {
@@ -105,16 +106,12 @@ export default {
       }
       this.drawPie('AccountEcharts')
     },
-    showAllcomeCharts: function () {
-      this.opinion = []
-      this.opinionData = []
-      for (let i = 0; i < this.allcomeList.length; i++) {
-        this.opinion.push(this.allcomeList[i].type)
-        this.opinionData.push({
-          value: this.allcomeList[i].expense,
-          name: this.allcomeList[i].type
-        })
-      }
+    showTotalcomeCharts: function () {
+      this.opinion = ['totalIncome', 'totalOutcome']
+      this.opinionData = [
+        {value: this.totalcomeList.totalIncome, name: 'totalIncome'},
+        {value: this.totalcomeList.totalOutcome, name: 'totalOutcome'}
+      ]
       this.drawPie('AccountEcharts')
     }
   }

@@ -79,6 +79,8 @@ export default {
   components: {AccountCharts},
   data () {
     return {
+      // 时间轴显示记账记录
+      showAccountInTime: [],
       // 按钮：数据
       buttonSize: 'large'
     }
