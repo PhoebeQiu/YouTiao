@@ -2,23 +2,23 @@
   <div>
     <!--<div>账本</div>-->
     <div>
-      <h3><span></span>个人账本</h3>
+      <h3><b>账本</b></h3>
+      <Divider />
       <div>
-        <card :bordered="false">
-          <Row :gutter="16">
-            <div class="book" v-for="book in books" :key="book.id">
-              <Col span="8">
-                <Card :bordered="false">
-                  <p><a v-on:click="toMainPage(book.id)">{{book.name}}</a></p>
-                </Card>
-              </Col>
+        <div>
+          <p><span></span>个人帐本</p>
+          <div id="privateBook">
+            <div class="aBook" v-for="book in books" :key="book.id">
+              <a v-on:click="toMainPage(book.id)">{{book.name}}</a>
             </div>
-          </Row>
-        </card>
+            <div class="bBook">添加账本</div>
+          </div>
+        </div>
       </div>
+      <Divider />
       <div>
         <Input class="addBook" v-model="value" placeholder="输入帐本名" style="width: 300px" />
-        <Button class="addBook" v-on:click="addAccBook()" shape="circle">添加账本</Button>
+        <Button class="addBookBtn" v-on:click="addAccBook()" shape="circle">添加账本</Button>
       </div>
     </div>
   </div>
@@ -72,14 +72,48 @@ export default {
 </script>
 
 <style scoped>
-.book{
-  width: 100px;
-  height: 100px;
-  border: 1px solid #bacee6;
-  margin: 5px;
-}
+  body{
+    background-color: #d7d2e6;
+    font-size: 12px;
+  }
+  p{
+    text-align: left;
+    margin: 5px 0px;
+  }
+  span{
+    width:4px;
+    height:15px;
+    padding:12px 2px 4px 2px;
+    margin-left: 8px;
+    border-left: 4px solid #747aaa;
+    font-size: 0;
+  }
+  a{
+    color: #000000;
+  }
 
-.addBook{
-  margin-top: 10px;
-}
+  #privateBook{
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    /*justify-content: space-around;*/
+    flex-wrap: wrap;
+    background-color: white;
+  }
+  .aBook,.bBook{
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    margin: 8px;
+    border: 1px solid #e1dce6;
+    border-radius: 5px;
+  }
+  .aBook{
+    background-color: rgba(255, 233, 238, 0.98);
+  }
+
+  /*添加按钮*/
+  .addBook{
+    margin-top: 10px;
+  }
 </style>
