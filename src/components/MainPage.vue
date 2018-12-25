@@ -16,7 +16,7 @@
               </div>
               <div class="conMiddle">
                 <div class="conMiddle_div">
-                  <p>10月收入：<br/></p>
+                  <p>12月收入：<br/></p>
                   <p class="conMiddle_p">{{inCome}}</p>
                 </div>
                 <div class="conMiddle_div">
@@ -26,12 +26,12 @@
                   </Button>
                 </div>
                 <div class="conMiddle_div">
-                  <p>10月支出：<br/></p>
+                  <p>12月支出：<br/></p>
                   <p class="conMiddle_p">{{outCome}}</p>
                 </div>
               </div>
               <div class="confoot">
-                <Timeline>
+                <Timeline class="timeline">
                   <TimelineItem>
                     <div class="confoot_time">1976年</div>
                     <div class="confoot_content">
@@ -63,9 +63,9 @@
       </Tabs>
     </div>
     <div class="mainMenu">
-      <div class="mainMenuSpan">记账</div>
-      <div class="mainMenuSpan">资产</div>
-      <div class="mainMenuSpan">我的</div>
+      <div class="mainMenuSpan"><p>记账<span>|</span></p></div>
+      <div class="mainMenuSpan"><p>资产<span>|</span></p></div>
+      <div class="mainMenuSpan"><p>我的</p></div>
     </div>
   </div>
 </template>
@@ -204,6 +204,9 @@ export default {
     font-size: 14px;
     font-weight: bold;
   }
+  .timeline p{
+    font-size: 8px;
+  }
 
   .mainMenu{
     width:100%;
@@ -213,9 +216,15 @@ export default {
   .mainMenuSpan{
     width: 33%;
     height: 30px;
-    font-size: 18px;
+    font-size: 15px;
     float: left;
     margin-right: 0.3%;
-    border: 1px solid #bacee6;
+    /*border: 1px solid #bacee6;*/
+  }
+  .mainMenuSpan p{
+    padding-top: 3px;
+  }
+  .mainMenuSpan span{
+    float: right;
   }
 </style>

@@ -4,7 +4,7 @@
       <FormItem label="预算">
         <Input v-model="formItem.inputBudget" style="width: 200px" placeholder="请输入"/>
       </FormItem>
-      <FormItem label="剩余预算提示">
+      <FormItem label="提示金额">
         <Input v-model="formItem.inputWarnBudget" style="width: 200px" placeholder="请输入"/>
       </FormItem>
       <FormItem label="备注">

@@ -4,7 +4,7 @@
     <div>
       <h3><span></span>个人账本</h3>
       <div>
-        <card>
+        <card :bordered="false">
           <Row :gutter="16">
             <div class="book" v-for="book in books" :key="book.id">
               <Col span="8">
@@ -17,8 +17,8 @@
         </card>
       </div>
       <div>
-        <Input v-model="value" placeholder="输入帐本名" style="width: 300px" />
-        <button v-on:click="addAccBook()">添加账本</button>
+        <Input class="addBook" v-model="value" placeholder="输入帐本名" style="width: 300px" />
+        <Button class="addBook" v-on:click="addAccBook()" shape="circle">添加账本</Button>
       </div>
     </div>
   </div>
@@ -77,5 +77,9 @@ export default {
   height: 100px;
   border: 1px solid #bacee6;
   margin: 5px;
+}
+
+.addBook{
+  margin-top: 10px;
 }
 </style>
